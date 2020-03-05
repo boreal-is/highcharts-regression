@@ -117,6 +117,18 @@
                 var s = series[i];
                 if (s.regression) {
                     var extraSerie = processSerie(s, 'init', this);
+                    /* Add fake serie to create a border */
+                    if (!extraSerie.id) {
+                        extraSerie.id = extraSerie.name;
+                    }
+                    var extraBorderSerie = _.clone(extraSerie);
+                    extraBorderSerie.id = `${extraBorderSerie.id}-border`;
+                    extraBorderSerie.linkedTo = extraSerie.id;
+                    extraBorderSerie.showInLegend = false;
+                    extraBorderSerie.enableMouseTracking = false;
+                    extraBorderSerie.color = '#FFF';
+                    extraBorderSerie.lineWidth = extraBorderSerie.lineWidth + 4;
+                    extraSeries.push(extraBorderSerie);
                     extraSeries.push(extraSerie);
                     arguments[1].series[i].rendered = true;
                 }
